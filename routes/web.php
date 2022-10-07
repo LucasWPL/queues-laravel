@@ -1,5 +1,7 @@
 <?php
 
+use App\Jobs\RandomImage;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/proccess', function () {
+    // $fileManager = new App\Models\FileManager();
+    // $fileManager->saveRandomPhoto();
+    RandomImage::dispatch()->delay(now()->addSecond(1));
 });
