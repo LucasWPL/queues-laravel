@@ -1,7 +1,6 @@
 <?php
 
-use App\Jobs\RandomImage;
-use GuzzleHttp\Client;
+use App\Http\Controllers\FileManager;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/proccess', function () {
-    // $fileManager = new App\Models\FileManager();
-    // $fileManager->saveRandomPhoto();
-    RandomImage::dispatch()->delay(now()->addSecond(1));
-});
+Route::get('/save-photo/{size}', [FileManager::class, 'savePhoto']);
