@@ -2,26 +2,24 @@
 
 namespace App\Providers;
 
+use App\Models\FileManager;
+use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
+    public function register(): void
     {
-        //
+        $this->app->when(FileManager::class)
+            ->needs(Client::class)
+            ->give(function () {
+                return new Client([
+                    'base_uri' => 'https://picsum.photos'
+                ]);
+            });
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
         //
     }

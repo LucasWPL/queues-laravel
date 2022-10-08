@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Models\FileManager;
-use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,16 +13,12 @@ class RandomImage implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private FileManager $fileManager;
-
-    public function __construct()
+    public function __construct(private int $size)
     {
-        $client = new Client();
-        $this->fileManager = new FileManager($client);
     }
 
-    public function handle()
+    public function handle(FileManager $fileManager)
     {
-        $this->fileManager->saveRandomPhoto();
+        $fileManager->saveRandomPhoto($this->size);
     }
 }
